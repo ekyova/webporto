@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portofolio Yova Rezky Apriliano, lulusan Teknik Informatika dengan fokus Network Administration, IT Infrastructure, Data Science, dan Generative AI.">
+  <title>Yova Rezky Apriliano | Network Administrator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>document.documentElement.dataset.theme = localStorage.getItem('yora-theme') === 'light' ? 'light' : 'dark'; document.documentElement.dataset.language = localStorage.getItem('yora-language') === 'en' ? 'en' : 'id'; document.documentElement.lang = document.documentElement.dataset.language;</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="intro-loader" id="introLoader" role="dialog" aria-modal="true" aria-label="Portofolio sedang dimuat">
+    <div class="loader-grid"></div>
+    <div class="loader-content">
+      <div class="loader-progress-row"><span id="loaderStatus">MENYIAPKAN KONEKSI SWITCH</span><strong id="loaderPercent">00%</strong></div>
+      <div class="loader-track"><span id="loaderBar"></span></div>
+    </div>
+    <svg class="network-scene" id="networkScene" viewBox="0 0 1000 500" role="group" aria-label="Ilustrasi switch. Seret konektor RJ45 ke port yang diminta. Port lain akan ditolak.">
+      <defs>
+        <linearGradient id="switchTop" x2="0" y2="1"><stop stop-color="#292929"/><stop offset="1" stop-color="#111111"/></linearGradient>
+        <linearGradient id="switchFront" x2="0" y2="1"><stop stop-color="#202020"/><stop offset="1" stop-color="#090909"/></linearGradient>
+        <linearGradient id="plugBody" x2="0" y2="1"><stop stop-color="#bdbdbd"/><stop offset="1" stop-color="#737373"/></linearGradient>
+      </defs>
+      <ellipse cx="650" cy="326" rx="330" ry="25" fill="#000" opacity=".45"/>
+      <g class="network-switch">
+        <path class="switch-top" d="M350 135H830L925 170H430Z" fill="url(#switchTop)"/>
+        <path class="switch-side" d="M350 135 430 170V300L350 265Z"/>
+        <path class="switch-front" d="M430 170H925V300H430Z"/>
+        <path class="switch-highlight" d="M350 135 430 170H925"/>
+        <text class="switch-name" x="500" y="157">YOVA · NETWORK SWITCH</text>
+        <text class="switch-model" x="460" y="194">10/100/1000 BASE-T</text>
+        <g class="lan-port" data-port="01" data-x="512" data-y="231"><rect class="port-frame" x="493" y="207" width="38" height="46" rx="3"/><rect class="port-inner" x="499" y="213" width="26" height="32" rx="2"/><path class="port-notch" d="M505 216h14v5h-14z"/><circle class="port-led" cx="512" cy="261" r="3"/><text x="512" y="282">01</text></g>
+        <g class="lan-port" data-port="02" data-x="572" data-y="231"><rect class="port-frame" x="553" y="207" width="38" height="46" rx="3"/><rect class="port-inner" x="559" y="213" width="26" height="32" rx="2"/><path class="port-notch" d="M565 216h14v5h-14z"/><circle class="port-led" cx="572" cy="261" r="3"/><text x="572" y="282">02</text></g>
+        <g class="lan-port" data-port="03" data-x="632" data-y="231"><rect class="port-frame" x="613" y="207" width="38" height="46" rx="3"/><rect class="port-inner" x="619" y="213" width="26" height="32" rx="2"/><path class="port-notch" d="M625 216h14v5h-14z"/><circle class="port-led" cx="632" cy="261" r="3"/><text x="632" y="282">03</text></g>
+        <g class="lan-port" data-port="04" data-x="692" data-y="231"><rect class="port-frame" x="673" y="207" width="38" height="46" rx="3"/><rect class="port-inner" x="679" y="213" width="26" height="32" rx="2"/><path class="port-notch" d="M685 216h14v5h-14z"/><circle class="port-led" cx="692" cy="261" r="3"/><text x="692" y="282">04</text></g>
+        <g class="lan-port" data-port="05" data-x="752" data-y="231"><rect class="port-frame" x="733" y="207" width="38" height="46" rx="3"/><rect class="port-inner" x="739" y="213" width="26" height="32" rx="2"/><path class="port-notch" d="M745 216h14v5h-14z"/><circle class="port-led" cx="752" cy="261" r="3"/><text x="752" y="282">05</text></g>
+        <g class="lan-port" data-port="06" data-x="812" data-y="231"><rect class="port-frame" x="793" y="207" width="38" height="46" rx="3"/><rect class="port-inner" x="799" y="213" width="26" height="32" rx="2"/><path class="port-notch" d="M805 216h14v5h-14z"/><circle class="port-led" cx="812" cy="261" r="3"/><text x="812" y="282">06</text></g>
+        <path class="switch-rule" d="M460 293H895"/>
+        <text class="switch-label" x="460" y="316">LAN / ETHERNET</text>
+        <text class="switch-label switch-label-right" x="895" y="316">LINK <tspan id="linkStatus">OFFLINE</tspan></text>
+      </g>
+      <path class="network-cable-shadow" id="lanCableShadow" d="M54 432C118 380 106 470 156 408C180 390 190 390 206 390"/>
+      <path class="network-cable" id="lanCable" d="M54 432C118 380 106 470 156 408C180 390 190 390 206 390"/>
+      <path class="network-cable-highlight" id="lanCableHighlight" d="M54 432C118 380 106 470 156 408C180 390 190 390 206 390"/>
+      <g class="cable-anchor"><rect x="37" y="418" width="27" height="28" rx="8"/><path d="M43 426h15m-15 6h15m-15 6h15"/></g>
+      <g class="lan-plug" id="lanPlug" transform="translate(240 390)" aria-hidden="true">
+        <path class="plug-latch" d="M-67-18-60-28h29l8 10z"/>
+        <rect class="plug-body" x="-86" y="-18" width="67" height="36" rx="5"/>
+        <path class="plug-body-line" d="M-74-11v22m-8-18v14"/>
+        <path class="plug-metal" d="M-19-14H-5L0-10V10l-5 4h-14z"/>
+        <path class="plug-pin" d="M-14-12v7m4-7v7m4-7v7"/>
+      </g>
+      <text class="network-instruction" id="networkInstruction" x="500" y="475">MENGHUBUNGKAN SECARA OTOMATIS</text>
+    </svg>
+    <div class="loader-corner corner-tl"></div><div class="loader-corner corner-br"></div>
+  </div>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Navigasi utama">
+      <a class="brand" href="#home" aria-label="Yova Rezky Apriliano - Home">
+        <span class="brand-mark">Y<span>.</span></span>
+        <span><strong>YoRA</strong><small>NETWORK ADMINISTRATOR</small></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Buka navigasi" aria-expanded="false" aria-controls="navLinks">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#skills">Skills</a>
+        <a class="nav-link" href="#projects">Portfolio</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </div>
+      <div class="language-switch" role="group" aria-label="Pilihan bahasa">
+        <button class="language-option" type="button" data-language-choice="id" aria-pressed="true" aria-label="Bahasa Indonesia">ID</button>
+        <button class="language-option" type="button" data-language-choice="en" aria-pressed="false" aria-label="English">EN</button>
+      </div>
+      <div class="theme-switch" role="group" aria-label="Pilihan tema">
+        <button class="theme-option" type="button" data-theme-choice="dark" aria-pressed="true"><span aria-hidden="true">◐</span> </button>
+        <button class="theme-option" type="button" data-theme-choice="light" aria-pressed="false"><span aria-hidden="true">☼</span> </button>
+      </div>
+      <a class="button button-primary nav-cta" href="#contact">Let’s Connect</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section-grid" id="home">
+      <div class="hero-glow"></div>
+      <div class="container hero-inner">
+        <div class="hero-heading reveal">
+          <p class="eyebrow"><span class="status-dot"></span> OPEN TO WORK</p>
+          <h1>Yova Rezky <span>Apriliano</span></h1>
+        </div>
+        <div class="hero-copy reveal">
+          <p class="hero-description">Halo! Saya suka mempelajari jaringan komputer dan bereksperimen dengan teknologi baru. Mulai dari konfigurasi jaringan hingga troubleshooting, saya tertarik memahami bagaimana setiap perangkat saling terhubung untuk menciptakan koneksi yang stabil, aman, dan andal.</p>
+          <div class="hero-tags" aria-label="Bidang fokus">
+            <span>Network Administrator</span>
+            <span>IT Infrastructure</span>
+            <span>Network Support</span>
+            <span>Data Science &amp; AI</span>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#projects">Lihat Proyek <span>↘</span></a>
+        </div>
+        <div class="hero-visual reveal">
+          <div class="portrait-frame" id="portraitFrame">
+            <div class="portrait-placeholder" aria-hidden="true">
+              <span>YR</span>
+              <small>image/Pas Foto.png</small>
+            </div>
+            <img class="portrait-image" id="portraitImage" src="image/Pas Foto.png" alt="Foto diri Yova Rezky Apriliano">
+          </div>
+          <div class="photo-highlights" aria-label="Ringkasan keahlian dan sertifikasi">
+            <div class="photo-highlight">
+              <span class="highlight-icon" aria-hidden="true">⌁</span>
+              <span><strong>Network Administration</strong><small>Configuration &amp; management</small></span>
+            </div>
+            <div class="photo-highlight">
+              <span class="highlight-icon" aria-hidden="true">✓</span>
+              <span><strong>BNSP Certified</strong><small>Network Administrator · 2025–2028</small></span>
+            </div>
+            <div class="photo-highlight">
+              <span class="highlight-icon" aria-hidden="true">▣</span>
+              <span><strong>IT Infrastructure</strong><small>Network, systems &amp; support</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container hero-bottom">
+        <span>01 / PORTFOLIO</span><span class="hero-line"></span><span>NETWORKING • INFRASTRUCTURE • SUPPORT</span>
+      </div>
+    </section>
+
+    <section class="about-section section" id="about">
+      <div class="container">
+        <div class="about-title reveal"><p class="eyebrow">02 — ABOUT ME</p><h2>ABOUT ME</h2></div>
+        <div class="about-layout">
+          <article class="about-bio reveal">
+            <div>
+              <p class="about-kicker">SAYA MEMBANGUN KONEKSI YANG ANDAL.</p>
+              <p>Saya Yova Rezky Apriliano, lulusan Teknik Informatika dari Universitas Muhammadiyah Jakarta dengan minat pada administrasi jaringan dan infrastruktur IT. Saya memiliki pengalaman praktik dalam konfigurasi jaringan, troubleshooting, serta administrasi sistem.</p>
+              <p>Saya senang mempelajari teknologi baru dan memecahkan masalah secara terstruktur. Saya ingin terus mengembangkan kemampuan teknis dan berkontribusi dalam membangun sistem yang stabil, aman, dan bermanfaat.</p>
+            </div>
+            <div class="about-location"><span aria-hidden="true">⌖</span> Jakarta, Indonesia</div>
+          </article>
+          <div class="about-education">
+            <h3 class="about-column-title">PENDIDIKAN</h3>
+            <article class="education-card reveal">
+              <div class="education-mark" aria-hidden="true"><img src="image/education/umj.png" alt=""></div>
+              <div class="education-details">
+                <div class="education-heading"><h4>UNIVERSITAS MUHAMMADIYAH JAKARTA</h4><span class="education-years">2022 — 2026</span></div>
+                <p class="education-degree">SARJANA TEKNIK INFORMATIKA</p>
+                <p>Latar belakang Teknik Informatika dengan fokus dan minat pada jaringan, infrastruktur IT, serta administrasi sistem.</p>
+              </div>
+            </article>
+            <article class="education-card reveal">
+              <div class="education-mark education-mark-secondary" aria-hidden="true"><img src="image/education/smkit-ihsanul-fikri.png" alt=""></div>
+              <div class="education-details">
+                <div class="education-heading"><h4>SMKIT IHSANUL FIKRI</h4><span class="education-years">2019 — 2021</span></div>
+                <p class="education-degree">TEKNIK KOMPUTER DAN JARINGAN</p>
+                <p>Mempelajari dasar komputer dan jaringan sebagai fondasi untuk melanjutkan studi di bidang teknologi informasi.</p>
+              </div>
+            </article>
+            <div class="about-stats reveal" aria-label="Ringkasan pendidikan dan fokus">
+              <div class="about-stat"><strong>02</strong><span>JENJANG<br>PENDIDIKAN</span></div>
+              <div class="about-stat"><strong>06</strong><span>SERTIFIKAT &amp;<br>PENGAKUAN</span></div>
+              <div class="about-stat"><strong>03</strong><span>FOKUS<br>UTAMA</span></div>
+              <div class="about-stat"><strong>01</strong><span>PROGRAM<br>MSIB</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="about-experience">
+          <h3 class="about-column-title">PENGALAMAN</h3>
+          <div class="experience-grid">
+            <article class="experience-card reveal">
+              <div class="experience-heading">
+                <div class="experience-mark" aria-hidden="true"><img src="image/education/umj.png" alt=""></div>
+                <div class="experience-title">
+                  <h4>Laboratory Assistant &amp; Teaching Mentor</h4>
+                  <p>Universitas Muhammadiyah Jakarta</p>
+                </div>
+                <span class="experience-years">Nov 2025 — Jan 2026</span>
+              </div>
+              <p class="experience-summary">Mendampingi sesi laboratorium dan praktikum, serta membantu mahasiswa memahami konsep teknis dan menyelesaikan tugas.</p>
+              <details class="experience-details">
+                <summary>LIHAT DETAIL <span aria-hidden="true">→</span></summary>
+                <ul>
+                  <li>Mendampingi mahasiswa selama sesi laboratorium dan kegiatan praktikum.</li>
+                  <li>Membantu menjelaskan konsep teknis dan mendukung penyelesaian tugas.</li>
+                </ul>
+              </details>
+            </article>
+            <article class="experience-card reveal">
+              <div class="experience-heading">
+                <div class="experience-mark experience-mark-secondary" aria-hidden="true"><img src="image/organizations/hmif.png" alt=""></div>
+                <div class="experience-title">
+                  <h4>Head of Science and Technology Department</h4>
+                  <p>HMIF — Informatics Engineering Student Association</p>
+                </div>
+                <span class="experience-years">Nov 2024 — Jul 2025</span>
+              </div>
+              <p class="experience-summary">Memimpin program departemen sains dan teknologi serta mendukung kegiatan dan inisiatif teknologi organisasi.</p>
+              <details class="experience-details">
+                <summary>LIHAT DETAIL <span aria-hidden="true">→</span></summary>
+                <ul>
+                  <li>Memimpin dan mengoordinasikan program departemen serta kegiatan terkait teknologi.</li>
+                  <li>Mengelola anggota tim dan mendukung pelaksanaan inisiatif departemen.</li>
+                </ul>
+              </details>
+            </article>
+            <article class="experience-card reveal">
+              <div class="experience-heading">
+                <div class="experience-mark" aria-hidden="true"><img src="image/education/umj.png" alt=""></div>
+                <div class="experience-title">
+                  <h4>PKM-GFT Team Chair</h4>
+                  <p>Universitas Muhammadiyah Jakarta</p>
+                </div>
+                <span class="experience-years">Jun 2025</span>
+              </div>
+              <p class="experience-summary">Memimpin tim dalam program PKM-GFT 2025 dan mengembangkan konsep sistem keamanan otomatis.</p>
+              <details class="experience-details">
+                <summary>LIHAT DETAIL <span aria-hidden="true">→</span></summary>
+                <ul>
+                  <li>Memimpin tim pada program PKM-GFT tingkat nasional tahun 2025.</li>
+                  <li>Mengembangkan konsep sistem keamanan otomatis berbasis teknologi proyeksi holografik.</li>
+                </ul>
+              </details>
+            </article>
+            <article class="experience-card reveal">
+              <div class="experience-heading">
+                <div class="experience-mark experience-mark-secondary" aria-hidden="true"><img src="image/organizations/celerates.png" alt=""></div>
+                <div class="experience-title">
+                  <h4>Data Science &amp; Generative AI Participant — MSIB</h4>
+                  <p>Celerates Acceleration Mastery Program — PT Mitra Talenta Grup</p>
+                </div>
+                <span class="experience-years">Mar 2025 — Jun 2025</span>
+              </div>
+              <p class="experience-summary">Menerapkan Python, machine learning, NLP, dan generative AI dalam proyek akhir program Data Science &amp; Generative AI.</p>
+              <details class="experience-details">
+                <summary>LIHAT DETAIL <span aria-hidden="true">→</span></summary>
+                <ul>
+                  <li>Menerapkan Python, machine learning, NLP, dan generative AI.</li>
+                  <li>Mengerjakan proyek akhir end-to-end selama program Data Science &amp; Generative AI.</li>
+                </ul>
+                <p>Sertifikat kelulusan program tersedia sebagai dokumen PDF.</p>
+                <p><a href="image/certificates/msib-data-science-generative-ai.pdf" target="_blank" rel="noreferrer">Buka sertifikat kelulusan MSIB (PDF)</a></p>
+              </details>
+            </article>
+          </div>
+        </div>
+        <div class="about-certifications">
+          <h3 class="about-column-title">LICENSES &amp; CERTIFICATIONS</h3>
+          <div class="certification-grid">
+            <article class="certification-card reveal">
+              <a class="certification-preview" href="image/certificates/bnsp-network-administrator.png" target="_blank" rel="noreferrer" aria-label="Buka sertifikat kompetensi BNSP Network Administrator">
+                <img src="image/certificates/bnsp-network-administrator.png" alt="Sertifikat kompetensi BNSP Network Administrator atas nama Yova Rezky Apriliano" loading="lazy" decoding="async">
+              </a>
+              <div class="certification-content">
+                <h4>BNSP NETWORK ADMINISTRATOR</h4>
+                <p class="certification-issuer">BNSP · 2025–2028</p>
+                <p>Sertifikasi kompetensi profesi di bidang administrasi jaringan.</p>
+                <details class="certification-details">
+                  <summary>DETAIL SERTIFIKASI <span aria-hidden="true">→</span></summary>
+                  <p>Sertifikat kompetensi Administrator Jaringan (CNA), diterbitkan 26 Desember 2025 dan berlaku 3 tahun. Nomor sertifikat: 61100 2522 6 0037472 2025.</p>
+                </details>
+              </div>
+            </article>
+            <article class="certification-card reveal">
+              <a class="certification-preview" href="image/certificates/alibaba-cloud-server.jpg" target="_blank" rel="noreferrer" aria-label="Buka sertifikat Operate and Manage a Cloud Server">
+                <img src="image/certificates/alibaba-cloud-server.jpg" alt="Sertifikat Alibaba Cloud: Operate and Manage a Cloud Server" loading="lazy" decoding="async">
+              </a>
+              <div class="certification-content">
+                <h4>OPERATE AND MANAGE A CLOUD SERVER</h4>
+                <p class="certification-issuer">ALIBABA CLOUD · 2025–2027</p>
+                <p>Materi operasional dan pengelolaan server cloud.</p>
+                <details class="certification-details">
+                  <summary>DETAIL SERTIFIKASI <span aria-hidden="true">→</span></summary>
+                  <p>Kursus Apsara Clouder – Cloud Computing. Berlaku hingga 27 Mei 2027; nomor sertifikat ACLC03250500211633.</p>
+                </details>
+              </div>
+            </article>
+            <article class="certification-card reveal">
+              <a class="certification-preview" href="image/certificates/alibaba-cloud-security.jpg" target="_blank" rel="noreferrer" aria-label="Buka sertifikat Cloud Platform Security Overview">
+                <img src="image/certificates/alibaba-cloud-security.jpg" alt="Sertifikat Alibaba Cloud: Cloud Platform Security Overview" loading="lazy" decoding="async">
+              </a>
+              <div class="certification-content">
+                <h4>CLOUD PLATFORM SECURITY OVERVIEW</h4>
+                <p class="certification-issuer">ALIBABA CLOUD · 2025–2027</p>
+                <p>Dasar keamanan pada platform dan layanan cloud.</p>
+                <details class="certification-details">
+                  <summary>DETAIL SERTIFIKASI <span aria-hidden="true">→</span></summary>
+                  <p>Kursus Apsara Clouder – Cloud Security. Berlaku hingga 9 Juli 2027; nomor sertifikat ACLS01250700216380.</p>
+                </details>
+              </div>
+            </article>
+            <article class="certification-card reveal">
+              <a class="certification-preview" href="image/certificates/celerates-msib.png" target="_blank" rel="noreferrer" aria-label="Buka sertifikat kelulusan Celerates Data Science dan Generative AI">
+                <img src="image/certificates/celerates-msib.png" alt="Sertifikat kelulusan Celerates Acceleration Mastery Program Data Science dan Generative AI Batch 2 2025" loading="lazy" decoding="async">
+              </a>
+              <div class="certification-content">
+                <h4>DATA SCIENCE &amp; GENERATIVE AI PROGRAM COMPLETION</h4>
+                <p class="certification-issuer">CELERATES · MSIB · 2025</p>
+                <p>Sertifikat kelulusan program Data Science &amp; Generative AI dari Celerates Acceleration Mastery Program.</p>
+                <details class="certification-details">
+                  <summary>DETAIL SERTIFIKAT <span aria-hidden="true">→</span></summary>
+                  <p>Celerates Acceleration Mastery Program (CAMP) Batch 2 2025, untuk program Data Science &amp; Generative AI. Program berlangsung 3 Maret–30 Juni 2025; sertifikat diterbitkan di Jakarta pada 1 Juli 2025.</p>
+                  <p>Nomor sertifikat: 035/CERTIFICATE-C/DSAI/CAMP-B2/2025.</p>
+                  <p><a href="image/certificates/msib-data-science-generative-ai.pdf" target="_blank" rel="noreferrer">Buka dokumen sertifikat tambahan (PDF)</a></p>
+                </details>
+              </div>
+            </article>
+            <article class="certification-card reveal">
+              <a class="certification-preview" href="image/certificates/pemateri-umj.png" target="_blank" rel="noreferrer" aria-label="Buka sertifikat pemateri webinar dan workshop Teknik Informatika FT-UMJ">
+                <img src="image/certificates/pemateri-umj.png" alt="Sertifikat sebagai pemateri webinar dan workshop Teknik Informatika FT-UMJ" loading="lazy" decoding="async">
+              </a>
+              <div class="certification-content">
+                <h4>PEMATERI WEBINAR &amp; WORKSHOP TEKNIK INFORMATIKA</h4>
+                <p class="certification-issuer">PROGRAM STUDI TI FT-UMJ · 13 JULI 2025</p>
+                <p>Pemateri pada acara bertema Laravel API Masterclass: Autentikasi, Role-Based Access and CRUD Testing.</p>
+                <details class="certification-details">
+                  <summary>DETAIL SERTIFIKAT <span aria-hidden="true">→</span></summary>
+                  <p>Sertifikat bernomor 10.002/F4.1.7-UMJ/VII/2025, diberikan di Jakarta pada 13 Juli 2025.</p>
+                  <p><a href="image/certificates/pemateri-umj.png" target="_blank" rel="noreferrer">Buka sertifikat pemateri</a></p>
+                </details>
+              </div>
+            </article>
+            <article class="certification-card reveal">
+              <div class="certification-preview" aria-hidden="true"><span>✦</span></div>
+              <div class="certification-content">
+                <h4>MIKROTIK CERTIFIED NETWORK ASSOCIATE (MTCNA)</h4>
+                <p class="certification-issuer">MIKROTIK · 2018–2023</p>
+                <p>Sertifikasi asosiasi untuk pengetahuan dan keterampilan jaringan MikroTik.</p>
+                <details class="certification-details">
+                  <summary>DETAIL SERTIFIKASI <span aria-hidden="true">→</span></summary>
+                  <p>Periode 2018–2023 sesuai yang tercantum di CV; status aktif tidak dinyatakan.</p>
+                </details>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="skills">
+      <div class="container">
+        <div class="skills-heading reveal">
+          <div class="skills-title">
+            <p class="eyebrow">03 — TECHNICAL ARSENAL</p>
+            <h2>BRICKBOX <span>// SKILLS</span></h2>
+          </div>
+          <div class="skill-filters" role="group" aria-label="Filter kategori keahlian">
+            <button class="skill-filter is-active" type="button" data-skill-filter="all" aria-pressed="true">SEMUA</button>
+            <button class="skill-filter" type="button" data-skill-filter="development" aria-pressed="false">DEVELOPMENT</button>
+            <button class="skill-filter" type="button" data-skill-filter="iot" aria-pressed="false">IOT SYSTEMS</button>
+            <button class="skill-filter" type="button" data-skill-filter="data-science" aria-pressed="false">DATA SCIENCE</button>
+            <button class="skill-filter" type="button" data-skill-filter="tools" aria-pressed="false">TOOLS &amp; SYSTEMS</button>
+          </div>
+        </div>
+        <div class="skill-grid">
+          <article class="skill-card reveal" data-skill-category="development"><span class="skill-icon" aria-hidden="true"><img src="image/skills/html5.svg" alt="" loading="lazy" decoding="async"></span><div class="skill-card-copy"><h3>HTML</h3><span class="skill-category">Development</span></div></article>
+          <article class="skill-card reveal" data-skill-category="development"><span class="skill-icon" aria-hidden="true"><img src="image/skills/css3.svg" alt="" loading="lazy" decoding="async"></span><div class="skill-card-copy"><h3>CSS</h3><span class="skill-category">Development</span></div></article>
+          <article class="skill-card reveal" data-skill-category="development"><span class="skill-icon" aria-hidden="true"><img src="image/skills/javascript.svg" alt="" loading="lazy" decoding="async"></span><div class="skill-card-copy"><h3>JavaScript</h3><span class="skill-category">Development</span></div></article>
+          <article class="skill-card reveal" data-skill-category="iot"><span class="skill-icon" aria-hidden="true"><img src="image/skills/arduino.svg" alt="" loading="lazy" decoding="async"></span><div class="skill-card-copy"><h3>Arduino</h3><span class="skill-category">IoT Systems</span></div></article>
+          <article class="skill-card reveal" data-skill-category="data-science"><span class="skill-icon" aria-hidden="true"><img src="image/skills/python.svg" alt="" loading="lazy" decoding="async"></span><div class="skill-card-copy"><h3>Python</h3><span class="skill-category">Data Science</span></div></article>
+          <article class="skill-card reveal" data-skill-category="data-science"><span class="skill-icon" aria-hidden="true"><img src="image/skills/google-colab.svg" alt="" loading="lazy" decoding="async"></span><div class="skill-card-copy"><h3>Google Colab</h3><span class="skill-category">Data Science</span></div></article>
+          <article class="skill-card reveal" data-skill-category="tools"><span class="skill-icon" aria-hidden="true"><img src="image/skills/vscode.svg" alt="" loading="lazy" decoding="async"></span><div class="skill-card-copy"><h3>Visual Studio Code</h3><span class="skill-category">Tools &amp; Systems</span></div></article>
+          <article class="skill-card reveal" data-skill-category="tools"><span class="skill-icon" aria-hidden="true"><img class="skill-icon-monochrome" src="image/skills/virtualbox.svg" alt="" loading="lazy" decoding="async"></span><div class="skill-card-copy"><h3>VirtualBox</h3><span class="skill-category">Tools &amp; Systems</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <sections class="projects-section section" id="projects">
+      <div class="container">
+        <div class="projects-heading reveal">
+          <div class="projects-title">
+            <p class="eyebrow">04 — SELECTED WORKS</p>
+            <h2>BUILT <span>PROJECTS</span></h2>
+          </div>
+          <div class="project-filters" role="group" aria-label="Filter kategori proyek">
+            <button class="project-filter is-active" type="button" data-project-filter="all" aria-pressed="true">SEMUA</button>
+            <button class="project-filter" type="button" data-project-filter="security" aria-pressed="false">SECURITY CONCEPT</button>
+            <button class="project-filter" type="button" data-project-filter="iot" aria-pressed="false">IOT SYSTEMS</button>
+            <button class="project-filter" type="button" data-project-filter="data-ai" aria-pressed="false">DATA &amp; AI</button>
+            <button class="project-filter" type="button" data-project-filter="academic" aria-pressed="false">ACADEMIC PROGRAM</button>
+          </div>
+        </div>
+        <div class="project-grid">
+        <article class="project-card reveal" data-project-categories="iot">
+          <div class="project-art iot-project-art" aria-label="Tangkapan layar dashboard presensi dan perangkat RFID berbasis IoT">
+            <img class="project-image project-image-contain" src="image/projects/presensi-rfid-dashboard.png" alt="Dashboard rekap presensi siswa dengan filter kelas dan laporan" loading="lazy" decoding="async">
+            <img class="project-image project-image-secondary" src="image/projects/presensi-rfid-iot.jpeg" alt="Perangkat presensi RFID berbasis IoT dengan layar LCD" loading="lazy" decoding="async">
+            <span class="project-type-badge">IOT SYSTEMS</span>
+            <span class="project-year-badge">RFID</span>
+          </div>
+          <div class="project-content">
+            <h3>Sistem Presensi RFID Berbasis IoT</h3>
+            <p>Sistem presensi berbasis RFID yang mengirimkan notifikasi secara real-time saat kartu dipindai.</p>
+            <div class="project-tags"><span>IoT</span><span>RFID</span><span>Real-Time Notification</span></div>
+            <a class="project-source-link" href="https://github.com/ekyova/presensi-RFID-IoT-notifikasi-Real-Time" target="_blank" rel="noreferrer">LIHAT SOURCE CODE <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="project-card reveal" data-project-categories="security academic">
+          <div class="project-art network-art" aria-label="Ilustrasi konsep sistem keamanan otomatis berbasis proyeksi holografik">
+            <div class="net-line l1"></div><div class="net-line l2"></div><div class="net-line l3"></div><div class="net-line l4"></div>
+            <span class="net-device router">HOLOGRAM</span><span class="net-device switch">SECURITY</span>
+            <span class="net-device pc pc1">ZONE-01</span><span class="net-device pc pc2">ZONE-02</span><span class="net-device server">SYSTEM</span>
+            <span class="project-type-badge">SECURITY CONCEPT</span>
+            <span class="project-year-badge">2025</span>
+          </div>
+          <div class="project-content">
+            <h3>Automated Security System Concept</h3>
+            <p>Konsep sistem keamanan otomatis berbasis teknologi proyeksi holografik yang dikembangkan dalam program PKM-GFT.</p>
+            <div class="project-tags"><span>PKM-GFT</span><span>Team Leadership</span><span>Holographic Projection</span></div>
+            <details class="project-details"><summary>BACA DETAIL PROYEK <span>↗</span></summary><ul><li>Memimpin tim dalam program PKM-GFT tingkat nasional tahun 2025.</li><li>Mengembangkan konsep sistem keamanan otomatis menggunakan teknologi proyeksi holografik.</li></ul></details>
+          </div>
+        </article>
+        <article class="project-card reveal" data-project-categories="data-ai academic">
+          <div class="project-art support-art" aria-label="Ilustrasi aplikasi Moodify untuk rekomendasi lagu berdasarkan suasana hati">
+            <div class="terminal-window"><div class="terminal-bar"><i></i><i></i><i></i><span>Moodify · Streamlit</span></div><div class="terminal-body"><p>&gt; streamlit run moodify01.py</p><p>Tell us your mood</p><p>&gt; Find your music</p><p>Spotify recommendations</p><p class="terminal-cursor">&gt; _</p></div></div>
+            <span class="project-type-badge">DATA &amp; AI</span>
+            <span class="project-year-badge">2025</span>
+          </div>
+          <div class="project-content">
+            <h3>Moodify — Rekomendasi Lagu Berdasarkan Mood</h3>
+            <p>Proyek Data Science &amp; Generative AI berupa aplikasi Streamlit untuk menemukan rekomendasi lagu Spotify berdasarkan suasana hati.</p>
+            <div class="project-tags"><span>Python</span><span>Streamlit</span><span>Mood-Based Recommendation</span><span>Spotify</span></div>
+            <a class="project-source-link" href="https://github.com/ekyova/Moodify-streamlit" target="_blank" rel="noreferrer">LIHAT SOURCE CODE <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        </div>
+        <p class="small-note reveal">Ringkasan proyek dan program berdasarkan CV. Ilustrasi bersifat representatif, bukan dokumentasi visual proyek asli.</p>
+      </div>
+    </section>
+
+    <section class="resume-section container reveal" id="resume">
+      <div class="resume-mark">CV<span>↗</span></div>
+      <div class="resume-copy"><p class="eyebrow">MORE ABOUT MY BACKGROUND</p><h2>Let’s review my <span>resume.</span></h2><p>Unduh CV untuk melihat informasi pendidikan, keterampilan, dan pengalaman secara ringkas.</p></div>
+      <a class="button button-primary" href="cv-yova.pdf" download>Download CV <span>↓</span></a>
+    </section>
+
+    <section class="section container" id="contact">
+      <div class="contact-layout">
+        <div class="contact-copy reveal"><p class="eyebrow">05 — CONTACT</p><h2>Let’s make things <span>connect.</span></h2><p>Terbuka untuk kesempatan entry-level di bidang IT Network, IT Infrastructure, dan IT Support. Silakan hubungi saya melalui kontak berikut.</p></div>
+        <div class="contact-list reveal">
+          <a class="contact-item" href="tel:+628816849958"><span class="contact-icon">☎</span><span><small>PHONE</small><strong>+62 881 6849 958</strong></span><span class="contact-arrow">↗</span></a>
+          <a class="contact-item" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=yovarezky%40gmail.com" target="_blank" rel="noreferrer"><span class="contact-icon">@</span><span><small>GMAIL</small><strong>yovarezky@gmail.com</strong></span><span class="contact-arrow">↗</span></a>
+          <a class="contact-item" href="https://www.linkedin.com/in/yova-rezky-apriliano-52262216b/" target="_blank" rel="noreferrer"><span class="contact-icon">in</span><span><small>LINKEDIN</small><strong>Yova Rezky Apriliano</strong></span><span class="contact-arrow">↗</span></a>
+          <a class="contact-item" href="https://github.com/ekyova" target="_blank" rel="noreferrer"><span class="contact-icon">GH</span><span><small>GITHUB</small><strong>github.com/ekyova</strong></span><span class="contact-arrow">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container footer-inner"><a class="brand footer-brand" href="#home"><span class="brand-mark">Y<span>.</span></span><span><strong>Yova Rezky Apriliano</strong><small>IT Network &amp; Infrastructure</small></span></a><p>Designed to connect. Built to solve.</p><span class="copyright">© <span id="year"></span> Yova Rezky Apriliano</span></div></footer>
+  <button class="back-to-top" id="backToTop" aria-label="Kembali ke atas">↑</button>
+  <script src="script.js"></script>
+</body>
+</html>
